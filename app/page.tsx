@@ -1,3 +1,9 @@
+import Login from "./login/page";
+
 export default function Home() {
-  return <h1>Finance AI</h1>;
+  return (
+    <div className="h-full">
+      <Login />
+    </div>
+  );
 }
