@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 
-import { ClerkProvider } from "@clerk/nextjs";
-
 import { dark } from "@clerk/themes";
 
+import { ClerkProvider } from "@clerk/nextjs";
+
+import { Mulish } from "next/font/google";
+
 import "./globals.css";
+
+const mulish = Mulish({
+  subsets: ["latin-ext"],
+});
 
 export const metadata: Metadata = {
   title: "FinanceAPI",
@@ -16,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="dark">
+    <html lang="pt-br">
+      <body className={`${mulish.className} dark`}>
         <ClerkProvider
           appearance={{
             baseTheme: dark,
