@@ -31,5 +31,6 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "actions",
+    header: "",
   },
 ];
