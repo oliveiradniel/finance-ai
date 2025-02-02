@@ -4,10 +4,10 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Transaction } from "@prisma/client";
 
-import { TransactionTypeBadge } from "./_components/type-badge";
-
-import { Button } from "@/app/_components/ui/button";
 import { PencilIcon, TrashIcon } from "lucide-react";
+
+import { TransactionTypeBadge } from "../_components/type-badge";
+import { Button } from "@/app/_components/ui/button";
 
 export const TRANSACTION_CATEGORY_LABELS = {
   EDUCATION: "Educação",
