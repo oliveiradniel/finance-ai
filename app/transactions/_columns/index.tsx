@@ -6,6 +6,9 @@ import { Transaction } from "@prisma/client";
 
 import { TransactionTypeBadge } from "./_components/type-badge";
 
+import { Button } from "@/app/_components/ui/button";
+import { PencilIcon, TrashIcon } from "lucide-react";
+
 export const TRANSACTION_CATEGORY_LABELS = {
   EDUCATION: "Educação",
   ENTERTAINMENT: "Entretenimento",
@@ -73,6 +76,18 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "actions",
-    header: "",
+    header: "Ações",
+    cell: () => {
+      return (
+        <div className="flex space-x-1">
+          <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <TrashIcon />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-muted-foreground">
+            <PencilIcon />
+          </Button>
+        </div>
+      );
+    },
   },
 ];
