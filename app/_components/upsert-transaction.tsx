@@ -1,14 +1,16 @@
+import { z } from "zod";
+
 import { useForm } from "react-hook-form";
 
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { upsertTransaction } from "../_actions/upsert-transaction";
 
 import {
   TransactionType,
   TransactionCategory,
   TransactionPaymentMethod,
 } from "@prisma/client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   TRANSACTION_CATEGORY_OPTIONS,
@@ -44,6 +46,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+
 import { DatePicker } from "./ui/date-picker";
 
 interface UpsertTransactionDialogProps {
@@ -89,7 +92,7 @@ export default function UpsertTransactionDialog({
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues ?? {
-      amount: 0,
+      amount: 50,
       category: TransactionCategory.OTHER,
       date: new Date(),
       name: "",
@@ -99,7 +102,13 @@ export default function UpsertTransactionDialog({
   });
 
   const onSubmit = async (data: FormSchema) => {
-    console.log(data);
+    try {
+      await upsertTransaction({ ...data, id: transactionId });
+      setIsOpen(false);
+      form.reset();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const isUpdate = Boolean(transactionId);
@@ -124,7 +133,7 @@ export default function UpsertTransactionDialog({
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="name"
