@@ -12,6 +12,12 @@ import {
   TransactionType,
 } from "@prisma/client";
 
+import {
+  TRANSACTION_CATEGORY_OPTIONS,
+  TRANSACTION_PAYMENT_METHOD_OPTIONS,
+  TRANSACTION_TYPE_OPTIONS,
+} from "../_constants/transactions";
+
 import { ArrowDownUpIcon } from "lucide-react";
 
 import {
@@ -44,91 +50,6 @@ import {
 import { DatePicker } from "./ui/date-picker";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { addTransaction } from "../_actions/add-transaction";
-
-const TRANSACTION_TYPE_OPTIONS = [
-  {
-    value: TransactionType.EXPENSE,
-    label: "Despesa",
-  },
-  {
-    value: TransactionType.DEPOSIT,
-    label: "Depósito",
-  },
-  {
-    value: TransactionType.INVESTMENT,
-    label: "Investimento",
-  },
-];
-
-const TRANSACTION_PAYMENT_METHOD_OPTIONS = [
-  {
-    value: TransactionPaymentMethod.BANK_TRANSFER,
-    label: "Transferência Bancária",
-  },
-  {
-    value: TransactionPaymentMethod.BANK_SLIP,
-    label: "Boleto Bancário",
-  },
-  {
-    value: TransactionPaymentMethod.CASH,
-    label: "Dinheiro",
-  },
-  {
-    value: TransactionPaymentMethod.CREDIT_CARD,
-    label: "Cartão de Crédito",
-  },
-  {
-    value: TransactionPaymentMethod.DEBIT_CARD,
-    label: "Cartão de Débito",
-  },
-  {
-    value: TransactionPaymentMethod.OTHER,
-    label: "Outros",
-  },
-  {
-    value: TransactionPaymentMethod.PIX,
-    label: "Pix",
-  },
-];
-
-const TRANSACTION_CATEGORY_OPTIONS = [
-  {
-    value: TransactionCategory.EDUCATION,
-    label: "Educação",
-  },
-  {
-    value: TransactionCategory.ENTERTAINMENT,
-    label: "Entretenimento",
-  },
-  {
-    value: TransactionCategory.FOOD,
-    label: "Comida",
-  },
-  {
-    value: TransactionCategory.HEALTH,
-    label: "Saúde",
-  },
-  {
-    value: TransactionCategory.HOUSING,
-    label: "Moradia",
-  },
-  {
-    value: TransactionCategory.OTHER,
-    label: "Outros",
-  },
-  {
-    value: TransactionCategory.SALARY,
-    label: "Pix",
-  },
-  {
-    value: TransactionCategory.TRANSPORTATION,
-    label: "Transporte",
-  },
-  {
-    value: TransactionCategory.UTILITY,
-    label: "Utilidade",
-  },
-];
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
