@@ -1,3 +1,4 @@
+import AddTransactionButton from "@/app/_components/add-transaction-button";
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
 
 interface SummaryCardProps {
@@ -28,12 +29,14 @@ export default function SummaryCard({
           {title}
         </p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex justify-between">
         <p
           className={`font-bold ${size === "small" ? "text-2xl" : "text-4xl font-bold"}`}
         >
           {formattedAmount}
         </p>
+
+        {size === "large" && <AddTransactionButton />}
       </CardContent>
     </Card>
   );
