@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 
 import { auth } from "@clerk/nextjs/server";
-
 import { UserButton } from "@clerk/nextjs";
+
 import NavBar from "./_components/navbar";
 
 export default async function Home() {
