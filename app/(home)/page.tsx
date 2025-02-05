@@ -14,11 +14,13 @@ interface HomeProps {
   };
 }
 
-export default async function Home({ searchParams: { month } }: HomeProps) {
+export default async function Home({ searchParams }: HomeProps) {
   const { userId } = await auth();
   if (!userId) {
     redirect("/login");
   }
+
+  const { month } = await searchParams;
 
   const monthIsInvalid = !month || !isMatch(month, "MM");
   if (monthIsInvalid) {
@@ -33,7 +35,9 @@ export default async function Home({ searchParams: { month } }: HomeProps) {
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <TimeSelect />
         </div>
-        <SummaryCards month={month} />
+        <div className="grid grid-cols-[2fr,1fr]">
+          <SummaryCards month={month} />
+        </div>
       </div>
     </>
   );
