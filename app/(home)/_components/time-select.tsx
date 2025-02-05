@@ -1,3 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+import { useRouter, useSearchParams } from "next/navigation";
+
 import {
   Select,
   SelectContent,
@@ -22,8 +28,30 @@ const MONTH_OPTIONS = [
 ];
 
 export default function TimeSelect() {
+  const { push } = useRouter();
+
+  const searchParams = useSearchParams();
+  const month = searchParams.get("month");
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  function handleMonthChange(month: string) {
+    push(`/?month=${month}`);
+  }
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
-    <Select>
+    <Select
+      onValueChange={(value) => handleMonthChange(value)}
+      defaultValue={month ?? ""}
+    >
       <SelectTrigger className="w-[150px] rounded-full">
         <SelectValue placeholder="Mês" />
       </SelectTrigger>

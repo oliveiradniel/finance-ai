@@ -1,3 +1,5 @@
+import { db } from "@/app/_lib/prismaClient";
+
 import {
   PiggyBankIcon,
   TrendingDownIcon,
@@ -7,13 +9,22 @@ import {
 
 import SummaryCard from "./summary-card";
 
-import { db } from "@/app/_lib/prismaClient";
+interface SummaryCards {
+  month: string;
+}
 
-export default async function SummaryCards() {
+export default async function SummaryCards({ month }: SummaryCards) {
+  const where = {
+    date: {
+      gte: new Date(`2025-${month}-01`),
+      lt: new Date(`2025-${month}-31`),
+    },
+  };
+
   const depositsTotal = Number(
     (
       await db.transaction.aggregate({
-        where: { type: "DEPOSIT" },
+        where: { ...where, type: "DEPOSIT" },
         _sum: { amount: true },
       })
     )._sum.amount,
@@ -22,7 +33,7 @@ export default async function SummaryCards() {
   const investimentsTotal = Number(
     (
       await db.transaction.aggregate({
-        where: { type: "INVESTMENT" },
+        where: { ...where, type: "INVESTMENT" },
         _sum: { amount: true },
       })
     )._sum.amount,
@@ -31,7 +42,7 @@ export default async function SummaryCards() {
   const expansesTotal = Number(
     (
       await db.transaction.aggregate({
-        where: { type: "EXPENSE" },
+        where: { ...where, type: "EXPENSE" },
         _sum: { amount: true },
       })
     )._sum.amount,
