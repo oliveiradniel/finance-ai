@@ -1,5 +1,3 @@
-import { db } from "@/app/_lib/prismaClient";
-
 import {
   PiggyBankIcon,
   TrendingDownIcon,
@@ -10,46 +8,18 @@ import {
 import SummaryCard from "./summary-card";
 
 interface SummaryCards {
-  month: string;
+  balance: number;
+  depositsTotal: number;
+  investmentsTotal: number;
+  expensesTotal: number;
 }
 
-export default async function SummaryCards({ month }: SummaryCards) {
-  const where = {
-    date: {
-      gte: new Date(`2025-${month}-01`),
-      lt: new Date(`2025-${month}-31`),
-    },
-  };
-
-  const depositsTotal = Number(
-    (
-      await db.transaction.aggregate({
-        where: { ...where, type: "DEPOSIT" },
-        _sum: { amount: true },
-      })
-    )._sum.amount,
-  );
-
-  const investimentsTotal = Number(
-    (
-      await db.transaction.aggregate({
-        where: { ...where, type: "INVESTMENT" },
-        _sum: { amount: true },
-      })
-    )._sum.amount,
-  );
-
-  const expansesTotal = Number(
-    (
-      await db.transaction.aggregate({
-        where: { ...where, type: "EXPENSE" },
-        _sum: { amount: true },
-      })
-    )._sum.amount,
-  );
-
-  const balance = depositsTotal - investimentsTotal - expansesTotal;
-
+export default async function SummaryCards({
+  balance,
+  depositsTotal,
+  investmentsTotal,
+  expensesTotal,
+}: SummaryCards) {
   return (
     <div className="space-y-6">
       <SummaryCard
@@ -63,7 +33,7 @@ export default async function SummaryCards({ month }: SummaryCards) {
         <SummaryCard
           icon={<PiggyBankIcon size={16} className="text-primary" />}
           title="Investido"
-          amount={investimentsTotal}
+          amount={investmentsTotal}
         />
         <SummaryCard
           icon={<TrendingUpIcon size={16} className="text-primary" />}
@@ -73,7 +43,7 @@ export default async function SummaryCards({ month }: SummaryCards) {
         <SummaryCard
           icon={<TrendingDownIcon size={16} className="text-red-500" />}
           title="Despesa"
-          amount={expansesTotal}
+          amount={expensesTotal}
         />
       </div>
     </div>
