@@ -1,9 +1,11 @@
 "use client";
 
-import { UserButton } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
+
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+
+import { UserButton } from "@clerk/nextjs";
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -13,7 +15,7 @@ export default function NavBar() {
       <div className="flex items-center gap-10">
         <Image src="/logo.svg" width={183} height={39} alt="Finance AI" />
         <Link
-          href="/"
+          href={`/?month=${new Date().getMonth() + 1}`}
           className={
             pathname === "/"
               ? "font-bold text-primary"

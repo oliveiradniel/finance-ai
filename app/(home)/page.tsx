@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 
 import { isMatch } from "date-fns";
 
-import getDashboard from "../_data/_get-dashboard";
+import getDashboard from "./_data/_get-dashboard";
 
 import NavBar from "../_components/navbar";
 import SummaryCards from "./_components/summary-cards";
@@ -28,6 +28,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const { month } = await searchParams;
 
   const monthIsInvalid = !month || !isMatch(month, "MM");
+
   if (monthIsInvalid) {
     redirect(`?month=${new Date().getMonth() + 1}`);
   }
