@@ -2,7 +2,7 @@
 
 import { TransactionType } from "@prisma/client";
 
-import { TransactionPercentagePerType } from "@/app/_data/_get-dashboard/types";
+import { TransactionPercentagePerType } from "./../_data/_get-dashboard/types";
 
 import { PiggyBank, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 

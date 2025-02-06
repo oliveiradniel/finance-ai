@@ -1,4 +1,4 @@
-import { TotalExpensePerCategory } from "@/app/_data/_get-dashboard/types";
+import { TotalExpensePerCategory } from "./../_data/_get-dashboard/types";
 
 import { CardContent, CardHeader, CardTitle } from "@/app/_components/ui/card";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
