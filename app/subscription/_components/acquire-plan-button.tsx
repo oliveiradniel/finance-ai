@@ -1,8 +1,8 @@
 "use client";
 
-import { createStripeCheckout } from "../_actions/create-stripe-checkout";
-
 import { loadStripe } from "@stripe/stripe-js";
+
+import { createStripeCheckout } from "../_actions/create-stripe-checkout";
 
 import { Button } from "@/app/_components/ui/button";
 
@@ -17,17 +17,13 @@ export default function AcquirePlanButton() {
       throw new Error("Stripe publishable key not found");
     }
 
-    try {
-      const stripe = await loadStripe(publicStripePublishableKey);
+    const stripe = await loadStripe(publicStripePublishableKey);
 
-      if (!stripe) {
-        throw new Error("Stripe not found");
-      }
-
-      await stripe.redirectToCheckout({ sessionId });
-    } catch (err) {
-      console.log("Error aqui", err);
+    if (!stripe) {
+      throw new Error("Stripe not found");
     }
+
+    await stripe.redirectToCheckout({ sessionId });
   }
 
   return (
