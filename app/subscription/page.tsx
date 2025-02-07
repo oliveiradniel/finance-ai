@@ -2,10 +2,12 @@ import { redirect } from "next/navigation";
 
 import { auth } from "@clerk/nextjs/server";
 
-import NavBar from "../_components/navbar";
-import { Card, CardContent, CardHeader } from "../_components/ui/card";
 import { CheckIcon, XIcon } from "lucide-react";
-import { Button } from "../_components/ui/button";
+
+import { Card, CardContent, CardHeader } from "../_components/ui/card";
+
+import NavBar from "../_components/navbar";
+import AcquirePlanButton from "./_components/acquire-plan-button";
 
 export default async function Subscription() {
   const { userId } = await auth();
@@ -63,9 +65,7 @@ export default async function Subscription() {
                 <CheckIcon />
                 <p>Relatórios de IA</p>
               </div>
-              <Button className="w-full rounded-full font-bold">
-                Adquirir plano
-              </Button>
+              <AcquirePlanButton />
             </CardContent>
           </Card>
         </div>
