@@ -1,4 +1,7 @@
 "use client";
+
+import Link from "next/link";
+
 import { useUser } from "@clerk/nextjs";
 
 import { loadStripe } from "@stripe/stripe-js";
@@ -30,14 +33,24 @@ export default function AcquirePlanButton() {
   }
 
   const hasPremiumPlan = user?.publicMetadata.subscriptionPlan === "premium";
+  if (hasPremiumPlan) {
+    return (
+      <Button className="w-full rounded-full font-bold" variant="link">
+        <Link
+          href={`${process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL as string}?prefilled_email=${user.emailAddresses[0].emailAddress}`}
+        >
+          Gerenciar Plano
+        </Link>
+      </Button>
+    );
+  }
 
   return (
     <Button
       className="w-full rounded-full font-bold"
       onClick={handlePlanAcquisiton}
-      variant={hasPremiumPlan ? "link" : "default"}
     >
-      {hasPremiumPlan ? "Gerenciar Plano" : "Adquirir plano"}
+      Adquirir Plano
     </Button>
   );
 }
