@@ -6,6 +6,8 @@ import { isMatch } from "date-fns";
 
 import getDashboard from "./_data/_get-dashboard";
 
+import { canUserAddTransaction } from "../_data/can-user-add-transaction";
+
 import NavBar from "../_components/navbar";
 import SummaryCards from "./_components/summary-cards";
 import TimeSelect from "./_components/time-select";
@@ -35,6 +37,8 @@ export default async function Home({ searchParams }: HomeProps) {
 
   const dashboard = await getDashboard(month);
 
+  const userCanAddTransactions = await canUserAddTransaction();
+
   return (
     <>
       <NavBar />
@@ -45,7 +49,10 @@ export default async function Home({ searchParams }: HomeProps) {
         </div>
         <div className="grid grid-cols-[2fr,1fr] gap-6">
           <div className="flex flex-col gap-6">
-            <SummaryCards {...dashboard} />
+            <SummaryCards
+              {...dashboard}
+              userCanAddTransaction={userCanAddTransactions}
+            />
             <div className="grid grid-cols-3 grid-rows-1 gap-6">
               <TransactionsPieChart {...dashboard} />
               <ExpensesPerCategory

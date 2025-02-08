@@ -7,6 +7,7 @@ interface SummaryCardProps {
   title: string;
   amount: number;
   size?: "small" | "large";
+  userCanAddTransaction?: boolean;
 }
 
 export default function SummaryCard({
@@ -14,6 +15,7 @@ export default function SummaryCard({
   title,
   amount,
   size = "small",
+  userCanAddTransaction,
 }: SummaryCardProps) {
   const formattedAmount = Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -37,7 +39,11 @@ export default function SummaryCard({
           {formattedAmount}
         </p>
 
-        {size === "large" && <AddTransactionButton />}
+        {size === "large" && (
+          <AddTransactionButton
+            userCanAddTransaction={userCanAddTransaction as boolean}
+          />
+        )}
       </CardContent>
     </Card>
   );
