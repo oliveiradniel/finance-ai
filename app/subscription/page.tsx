@@ -17,7 +17,7 @@ export default async function Subscription() {
   }
 
   const user = await (await clerkClient()).users.getUser(userId);
-  const hasPremiunPlan = (user.publicMetadata.subscription = "premium");
+  const hasPremiumPlan = user.publicMetadata.subscriptionPlan === "premium";
 
   return (
     <>
@@ -26,8 +26,8 @@ export default async function Subscription() {
         <h1 className="text-2xl font-bold">Assinatura</h1>
 
         <div className="flex gap-6">
-          <Card className="w-[450px]">
-            {!hasPremiunPlan && (
+          <Card className="relative w-[450px]">
+            {!hasPremiumPlan && (
               <Badge className="absolute left-4 top-12 bg-primary/10 text-primary hover:bg-primary/10">
                 Ativo
               </Badge>
@@ -57,7 +57,7 @@ export default async function Subscription() {
 
           <Card className="w-[450px]">
             <CardHeader className="relative border-b border-solid py-8">
-              {hasPremiunPlan && (
+              {hasPremiumPlan && (
                 <Badge className="absolute left-4 top-12 bg-primary/10 text-primary hover:bg-primary/10">
                   Ativo
                 </Badge>
