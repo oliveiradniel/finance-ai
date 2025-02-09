@@ -1,6 +1,6 @@
-"user server";
+"use server";
 
-import OpenAi from "openai";
+import OpenAI from "openai";
 
 import { redirect } from "next/navigation";
 
@@ -12,6 +12,8 @@ import { GenerateAiReportSchema, generateAiReportSchema } from "./schema";
 
 export async function generateAiReport({ month }: GenerateAiReportSchema) {
   generateAiReportSchema.parse({ month });
+
+  const { OPENAI_API_KEY } = process.env;
 
   const { userId } = await auth();
   if (!userId) {
@@ -25,9 +27,11 @@ export async function generateAiReport({ month }: GenerateAiReportSchema) {
     throw new Error("You need a premium plan to generate AI reports");
   }
 
-  const openAi = new OpenAi({
-    apiKey: process.env.OPENAI_API_KEY,
+  const openAi = new OpenAI({
+    apiKey: OPENAI_API_KEY,
   });
+  if (!OPENAI_API_KEY) {
+  }
 
   // get the transactions of the month received
   const transactions = await db.transaction.findMany({
@@ -40,14 +44,13 @@ export async function generateAiReport({ month }: GenerateAiReportSchema) {
   });
 
   // send the transactions to chatGPT and ask it to generate the report with insights
-  const content = `Gere um relatório com insights sobre as minhas finanças, com dicas e orientações de como melhorar minha vida financeira. As transações estão divididas por ponto e virgula. A estrutura de cada uma é {DATA}-{TIPO}-{VALOR}-{CATEGORIA}. São elas:
+  const content = `Gere um relatório com insights sobre as minhas finanças, com dicas e orientações de como melhorar minha vida financeira. Se estiver em inglês traduza para português e após o ponto e vírgula pule a linha. As transações estão divididas por ponto e vírgula. A estrutura de cada uma é {DATA}-{TIPO}-{VALOR}-{CATEGORIA}. São elas:
   ${transactions
     .map(
       (transaction) =>
         `${transaction.date.toLocaleDateString("pt-BR")}-R$${transaction.amount}-${transaction.type}-${transaction.category}`,
     )
-    .join(";")}
-  `;
+    .join(";")}`;
 
   const completion = await openAi.chat.completions.create({
     model: "gpt-4o-mini",
