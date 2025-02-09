@@ -14,6 +14,7 @@ import TimeSelect from "./_components/time-select";
 import TransactionsPieChart from "./_components/transactions-pie-chart";
 import ExpensesPerCategory from "./_components/expenses-per-category";
 import LastTransactions from "./_components/last-transactions";
+import AiReportButton from "./_components/ai-reports-button";
 
 interface HomeProps {
   searchParams: {
@@ -45,7 +46,10 @@ export default async function Home({ searchParams }: HomeProps) {
       <div className="space-y-6 p-6">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
-          <TimeSelect />
+          <div className="flex items-center gap-3">
+            <AiReportButton />
+            <TimeSelect />
+          </div>
         </div>
         <div className="grid grid-cols-[2fr,1fr] gap-6">
           <div className="flex flex-col gap-6">
