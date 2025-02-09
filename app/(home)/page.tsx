@@ -17,9 +17,7 @@ import LastTransactions from "./_components/last-transactions";
 import AiReportButton from "./_components/ai-reports-button";
 
 interface HomeProps {
-  searchParams: {
-    month: string;
-  };
+  searchParams: Promise<{ month: string }>;
 }
 
 export default async function Home({ searchParams }: HomeProps) {
