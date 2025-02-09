@@ -47,7 +47,7 @@ export default async function Home({ searchParams }: HomeProps) {
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <div className="flex items-center gap-3">
-            <AiReportButton />
+            <AiReportButton month={month} />
             <TimeSelect />
           </div>
         </div>

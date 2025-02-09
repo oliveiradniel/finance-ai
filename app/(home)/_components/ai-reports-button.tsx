@@ -1,3 +1,7 @@
+"use client";
+
+import { generateAiReport } from "../_actions/generate-ai-report";
+
 import { Button } from "@/app/_components/ui/button";
 import {
   Dialog,
@@ -10,7 +14,19 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
 
-export default function AiReportButton() {
+interface AiReportButtonProps {
+  month: string;
+}
+
+export default function AiReportButton({ month }: AiReportButtonProps) {
+  async function handleGenerateReporClick() {
+    try {
+      await generateAiReport({ month });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -28,7 +44,7 @@ export default function AiReportButton() {
           <DialogClose>
             <Button variant="ghost">Cancelar</Button>
           </DialogClose>
-          <Button>Gerar relatório</Button>
+          <Button onClick={handleGenerateReporClick}>Gerar relatório</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
