@@ -30,8 +30,6 @@ export async function generateAiReport({ month }: GenerateAiReportSchema) {
   const openAi = new OpenAI({
     apiKey: OPENAI_API_KEY,
   });
-  if (!OPENAI_API_KEY) {
-  }
 
   // get the transactions of the month received
   const transactions = await db.transaction.findMany({
