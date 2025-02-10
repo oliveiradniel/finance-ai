@@ -1,3 +1,5 @@
+import { deleteTransaction } from "../_actions/delete-transaction";
+
 import { TrashIcon } from "lucide-react";
 
 import {
@@ -12,6 +14,7 @@ import {
   AlertDialogTrigger,
 } from "@/app/_components/ui/alert-dialog";
 import { Button } from "@/app/_components/ui/button";
+import { toast } from "sonner";
 
 interface DeleteTransactionButtonProps {
   transactionId: string;
@@ -20,6 +23,15 @@ interface DeleteTransactionButtonProps {
 export default function DeleteTransactionButton({
   transactionId,
 }: DeleteTransactionButtonProps) {
+  async function handleConfirmDeleteClick() {
+    try {
+      await deleteTransaction({ transactionId });
+      toast.success("Transação deletada com sucesso!");
+    } catch {
+      console.log("Ocorreu um erro ao deletar a transação!");
+    }
+  }
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -38,7 +50,9 @@ export default function DeleteTransactionButton({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction>Continuar</AlertDialogAction>
+          <AlertDialogAction onClick={handleConfirmDeleteClick}>
+            Continuar
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
