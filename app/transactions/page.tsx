@@ -39,7 +39,10 @@ export default async function Transaction() {
             userCanAddTransaction={userCanAddTransactions}
           />
         </div>
-        <DataTable columns={transactionColumns} data={transactions} />
+        <DataTable
+          columns={transactionColumns}
+          data={JSON.parse(JSON.stringify(transactions))}
+        />
       </div>
     </>
   );
